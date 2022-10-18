@@ -1,4 +1,20 @@
 .btn {
     background-color: goldenrod;
-    border: 1px solid navy;
+    border: 1px solid royalblue;
+    border-radius: 5px;
+}
+
+.page-btn {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding-bottom: 50px;
+}
+
+.page-btn>button:hover {
+    background-color: royalblue;
+}
+
+.Active {
+    background-color: royalblue;
 }

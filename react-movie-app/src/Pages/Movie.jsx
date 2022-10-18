@@ -8,14 +8,22 @@ export default function Movies() {
   const [sort, setSort] = React.useState('')
   const [order, setOrder] = React.useState('')
   const [page, setPage] = React.useState(1)
+  const [loading, setLoading] = React.useState(false)
 
   React.useEffect(() => {
     fetchData()
   }, [sort, order, page])
 
   const fetchData = () => {
-    getData(`https://radiant-inlet-76290.herokuapp.com/movies/?_sort=${sort}&_order=${order}&_page=${page}&_limit=20`).then((res) => setArr(res))
+    setLoading(true)
+    getData(`https://radiant-inlet-76290.herokuapp.com/movies/?_sort=${sort}&_order=${order}&_page=${page}&_limit=20`)
+      .then((res) => {
+        setArr(res)
+        setLoading(false)
+      })
   }
+
+
 
   console.log(sort)
   return (
@@ -34,13 +42,18 @@ export default function Movies() {
           <option value="popularity">Popularity</option>
         </select>
       </div>
+      <div>
+        {
+          loading && <img src="https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif" alt="" />
+        }
+      </div>
       <div className='movie-card-mainbox'>
         {
           arr.map((ele) => <MovieCard key={ele.id} original_name={ele.original_name} poster_path={ele.poster_path} AboutMore={ele.id} />)
         }
       </div>
       <div >
-      <Pagination current={page} onChange={(value) => setPage(value)} total={8} />
+        <Pagination current={page} onChange={(value) => setPage(value)} total={8} />
       </div>
     </div>
   )
